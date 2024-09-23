@@ -1,7 +1,7 @@
 package andrewkassab.jsf_login_api.service;
 
-import andrewkassab.jsf_login_api.dao.UserDAO;
 import andrewkassab.jsf_login_api.model.User;
+import andrewkassab.jsf_login_api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,23 +12,23 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserDAO userDAO;
+    private UserRepository userRepository;
 
     @Transactional
     @Override
     public Optional<User> login(String username, String password) {
-        Optional<User> user = userDAO.findUserByUsername(username);
+        Optional<User> user = userRepository.findByUsername(username);
         return user.filter(u -> u.getPassword().equals(password));
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return userDAO.findUserByUsername(username);
+        return userRepository.findByUsername(username);
     }
 
     @Override
     public void saveUser(User user) {
-        userDAO.saveUser(user);
+        userRepository.save(user);
     }
 
 }

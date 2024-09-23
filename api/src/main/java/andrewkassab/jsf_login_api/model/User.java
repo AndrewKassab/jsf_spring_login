@@ -1,10 +1,18 @@
 package andrewkassab.jsf_login_api.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 @Entity
 @Table(name = "user", catalog = "jsf_login")
+@Builder
+@AllArgsConstructor
 public class User implements java.io.Serializable {
+
+    public User() {
+
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
