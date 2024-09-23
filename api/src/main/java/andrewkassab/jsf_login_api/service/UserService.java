@@ -1,6 +1,7 @@
 package andrewkassab.jsf_login_api.service;
 
-import andrewkassab.jsf_login.model.User;
+
+import andrewkassab.jsf_login_api.model.User;
 
 import java.util.Optional;
 

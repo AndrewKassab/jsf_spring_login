@@ -1,9 +1,6 @@
 package andrewkassab.jsf_login_api.model;
 
-import javax.persistence.*;
-
-import static javax.persistence.GenerationType.IDENTITY;
-
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "user", catalog = "jsf_login")

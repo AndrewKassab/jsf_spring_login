@@ -1,6 +1,6 @@
 package andrewkassab.jsf_login_api.dao;
 
-import andrewkassab.jsf_login.model.User;
+import andrewkassab.jsf_login_api.model.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
