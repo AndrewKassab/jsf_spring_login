@@ -1,5 +1,9 @@
 package andrewkassab.jsf_login.beans;
 
+import andrewkassab.jsf_login_common.dto.LoginRequest;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -8,6 +12,13 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
+
+import static java.net.HttpURLConnection.HTTP_OK;
 
 @Named("loginBean")
 @SessionScoped
@@ -18,13 +29,29 @@ public class LoginBean implements Serializable {
 
     private String confirmPassword;
 
+    private HttpClient httpClient;
+
+    private String BASE_URL = "http://localhost:8081";
+
+    private String REGISTER = "/register";
+
+    private String LOGIN = "/login";
+
+    private ObjectMapper objectMapper = new ObjectMapper();
+
+    @PostConstruct
+    public void init() {
+        httpClient = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(10))
+                .build();
+    }
+
     public void login() throws IOException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         Flash flash = facesContext.getExternalContext().getFlash();
         flash.setKeepMessages(true);  // Keeps messages for the next request
 
-        // TODO: New  implementation calling backend
-        if (false == true) {
+        if (authenticate(username, password)) {
             HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
             session.setAttribute("username", username);
             FacesContext.getCurrentInstance().getExternalContext().redirect("welcome.xhtml");
@@ -32,13 +59,64 @@ public class LoginBean implements Serializable {
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Incorrect Credentials.", null));
         }
     }
-    // TODO: New implementation calling backend.
+
+    private boolean authenticate(String username, String password) {
+        try {
+            LoginRequest loginRequest = new LoginRequest(username, password);
+
+            String jsonInputString = objectMapper.writeValueAsString(loginRequest);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL.concat(LOGIN)))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonInputString))
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == HTTP_OK) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+
     public void register() throws IOException {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         Flash flash = facesContext.getExternalContext().getFlash();
         flash.setKeepMessages(true);  // Keeps messages for the next request
 
-        FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+        if (!password.equals(confirmPassword)) {
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Passwords must match", null));
+            return;
+        }
+
+        try {
+            LoginRequest loginRequest = new LoginRequest(username, password);
+
+            String jsonInputString = objectMapper.writeValueAsString(loginRequest);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL.concat(LOGIN)))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonInputString))
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == HTTP_OK) {
+                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Account successfully created", null));
+                FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+            }
+            else {
+                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Username already taken", null));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void logout() throws IOException {

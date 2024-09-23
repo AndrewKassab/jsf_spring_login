@@ -1,8 +1,8 @@
 package andrewkassab.jsf_login_api.controller;
 
-import andrewkassab.jsf_login_api.dto.LoginRequest;
 import andrewkassab.jsf_login_api.model.User;
 import andrewkassab.jsf_login_api.service.UserService;
+import andrewkassab.jsf_login_common.dto.LoginRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

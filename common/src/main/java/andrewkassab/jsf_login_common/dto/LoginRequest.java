@@ -1,6 +1,14 @@
-package andrewkassab.jsf_login_api.dto;
+package andrewkassab.jsf_login_common.dto;
 
 public class LoginRequest {
+
+    public LoginRequest() {}
+
+    public LoginRequest(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     private String username;
     private String password;
 
