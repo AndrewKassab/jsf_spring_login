@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
 <h:head>
     <title>JSF Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/primefaces/12.0.0/themes/nova-light/theme.css" />
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,7 +24,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 500px;
             text-align: center;
         }
 
@@ -81,15 +85,6 @@
             text-decoration: underline;
         }
 
-        .success-message {
-            color: #28a745;
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 20px;
-            list-style-type: none;
-            padding: 0;
-        }
-
         .error-message {
             color: red;
             font-size: 14px;
@@ -100,24 +95,27 @@
 </h:head>
 <h:body>
     <div class="login-container">
-        <h:messages globalOnly="true" layout="list" styleClass="error-message"
-                    errorClass="error-message" infoClass="success-message"/>
         <h1>Login</h1>
         <h:form>
-            <div class="form-group">
-                <h:outputLabel for="username" value="Username:"/>
-                <h:inputText id="username" value="#{loginBean.username}" required="true" />
-            </div>
+            <p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true"
+                        errorClass="error-message" infoClass="success-message"/>
+            <p:panel>
+                <div class="form-group">
+                    <p:outputLabel for="username" value="Username:"/>
+                    <p:inputText id="username" value="#{loginBean.username}"
+                                 required="true" requiredMessage="Username required." />
+                </div>
 
-            <div class="form-group">
-                <h:outputLabel for="password" value="Password:"/>
-                <h:inputSecret id="password" value="#{loginBean.password}" required="true" />
-            </div>
+                <div class="form-group">
+                    <p:outputLabel for="password" value="Password:"/>
+                    <p:password id="password" value="#{loginBean.password}" required="true"
+                                requiredMessage="Password required." />
+                </div>
 
-            <h:commandButton value="Login" action="#{loginBean.login}" styleClass="form-button" />
+                <p:commandButton value="Login" action="#{loginBean.login}" styleClass="form-button" update="msgs"/>
 
-            <!-- Register Link -->
-            <h:link value="Don't have an account? Register" outcome="register.xhtml" styleClass="register-link" />
+                <h:link value="Don't have an account? Register" outcome="register.xhtml" styleClass="register-link" />
+            </p:panel>
         </h:form>
     </div>
 </h:body>
