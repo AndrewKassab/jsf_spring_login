@@ -1,4 +1,4 @@
-package model;
+package andrewkassab.jsf_login_api.model;
 
 import javax.persistence.*;
 

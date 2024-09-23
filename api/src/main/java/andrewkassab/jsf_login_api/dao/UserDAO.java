@@ -1,4 +1,4 @@
-package dao;
+package andrewkassab.jsf_login_api.dao;
 
 import andrewkassab.jsf_login.model.User;
 import org.springframework.stereotype.Repository;
