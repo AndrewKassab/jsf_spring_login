@@ -1,6 +1,6 @@
 package andrewkassab.jsf_login_api.repository;
 
-import andrewkassab.jsf_login_api.model.User;
+import andrewkassab.jsf_login_api.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

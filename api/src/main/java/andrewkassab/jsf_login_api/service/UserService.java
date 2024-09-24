@@ -1,16 +1,48 @@
 package andrewkassab.jsf_login_api.service;
 
+import andrewkassab.jsf_login_api.entity.User;
+import andrewkassab.jsf_login_api.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import andrewkassab.jsf_login_api.model.User;
-
+import java.util.Collections;
 import java.util.Optional;
 
-public interface UserService {
+@Service
+public class UserService implements UserDetailsService {
 
-    Optional<User> login(String username, String password);
+    @Autowired
+    private UserRepository userRepository;
 
-    Optional<User> findByUsername(String username);
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
-    void saveUser(User user);
+    @Transactional
+    public Optional<User> login(String username, String password) {
+        Optional<User> user = userRepository.findByUsername(username);
+        return user.filter(u -> passwordEncoder.encode(u.getPassword()).equals(password));
+    }
 
+    public void saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> user = userRepository.findByUsername(username);
+
+        if (!user.isPresent()) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        return new org.springframework.security.core.userdetails.User(user.get().getUsername(),
+                user.get().getPassword(), true, true, true,
+                true, Collections.emptyList());
+    }
 }

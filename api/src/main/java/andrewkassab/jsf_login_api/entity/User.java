@@ -1,4 +1,4 @@
-package andrewkassab.jsf_login_api.model;
+package andrewkassab.jsf_login_api.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

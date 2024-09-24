@@ -1,6 +1,6 @@
 package andrewkassab.jsf_login_api.controller;
 
-import andrewkassab.jsf_login_api.model.User;
+import andrewkassab.jsf_login_api.entity.User;
 import andrewkassab.jsf_login_api.service.UserService;
 import andrewkassab.jsf_login_common.dto.LoginRequest;
 import jakarta.servlet.http.HttpServletRequest;
