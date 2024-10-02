@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+  xmlns:mycomp="http://java.sun.com/jsf/composite/components">
 
 <h:head>
     <title>JSF Login</title>
@@ -93,28 +94,8 @@
 </h:head>
 <h:body>
     <div class="login-container">
-        <h1>Login</h1>
-        <h:form>
-            <p:messages id="msgs" autoUpdate="true" closable="true" showDetail="true"
-                        errorClass="error-message" infoClass="success-message"/>
-            <p:panel>
-                <div class="form-group">
-                    <p:outputLabel for="username" value="Username:"/>
-                    <p:inputText id="username" value="#{loginBean.username}"
-                                 required="true" requiredMessage="Username required." />
-                </div>
-
-                <div class="form-group">
-                    <p:outputLabel for="password" value="Password:"/>
-                    <p:password id="password" value="#{loginBean.password}" required="true"
-                                requiredMessage="Password required." />
-                </div>
-
-                <p:commandButton value="Login" action="#{loginBean.login}" styleClass="form-button" update="msgs"/>
-
-                <h:link value="Don't have an account? Register" outcome="register.xhtml" styleClass="register-link" />
-            </p:panel>
-        </h:form>
+        <mycomp:credentialForm action="#{loginBean.login}" buttonLabel="Login"/>
+        <h:link value="Don't have an account? Register" outcome="register.xhtml"/>
     </div>
 </h:body>
 </html>

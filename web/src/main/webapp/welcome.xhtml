@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:components="http://java.sun.com/jsf/composite/components">
+      xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
     <title>Welcome Page</title>
     <style>
@@ -34,7 +33,7 @@
 <h:body>
     <f:event type="preRenderView" listener="#{loginBean.checkLogin}"/>
     <div class="container">
-        <components:welcomeMessage username="{{loginBean.username}}"/>
+        <h1>Welcome, #{loginBean.username}!</h1>
         <h:form>
             <h:commandButton value="Logout" action="#{loginBean.logout}" styleClass="logout-button" />
         </h:form>
