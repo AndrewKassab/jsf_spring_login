@@ -1,5 +1,5 @@
 .idea
 /target
-/web/target/
+/web/target
 /api/target
-/common/target/
+/common/target
