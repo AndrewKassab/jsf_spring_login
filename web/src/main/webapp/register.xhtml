@@ -9,7 +9,7 @@
 <h:body>
     <div class="credential-container">
         <h1>Register</h1>
-        <mycomp:credentialForm action="#{loginBean.register}" buttonLabel="Register"/>
+        <mycomp:credentialForm action="#{loginBean.register}" buttonLabel="Register" showConfirmPassword="true"/>
         <h:link value="Already have an account? Login" outcome="login.xhtml" styleClass="redirect-link"/>
     </div>
 </h:body>

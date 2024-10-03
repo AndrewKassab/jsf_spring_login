@@ -25,7 +25,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public Optional<User> login(String username, String password) {
         Optional<User> user = userRepository.findByUsername(username);
-        return user.filter(u -> passwordEncoder.encode(u.getPassword()).equals(password));
+        return user.filter(u -> passwordEncoder.matches(password, u.getPassword()));
     }
 
     public void saveUser(User user) {

@@ -18,6 +18,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 
+import static java.net.HttpURLConnection.HTTP_CREATED;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 @Named("loginBean")
@@ -100,14 +101,14 @@ public class LoginBean implements Serializable {
             String jsonInputString = objectMapper.writeValueAsString(loginRequest);
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(BASE_URL.concat(LOGIN)))
+                    .uri(URI.create(BASE_URL.concat(REGISTER)))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(jsonInputString))
                     .build();
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode() == HTTP_OK) {
+            if (response.statusCode() == HTTP_CREATED) {
                 facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Account successfully created", null));
                 FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
             }
