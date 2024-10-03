@@ -29,14 +29,14 @@ class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);  // Initialize mocks
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void testLogin_Success() {
         String username = "testUser";
         String rawPassword = "password";
-        String encodedPassword = "$2a$10$...";  // Simulated encoded password
+        String encodedPassword = "$2a$10$...";
         User user = new User();
         user.setUsername(username);
         user.setPassword(encodedPassword);
