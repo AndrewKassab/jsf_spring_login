@@ -1,41 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cc="http://andrewkassab.com/custom">
 <h:head>
     <title>Welcome Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-        h1 {
-            color: #333333;
-        }
-        .logout-button {
-            margin-top: 20px;
-        }
-    </style>
 </h:head>
 <h:body>
     <f:event type="preRenderView" listener="#{loginBean.checkLogin}"/>
     <div class="container">
         <h1>Welcome, #{loginBean.username}!</h1>
         <h:form>
-            <h:commandButton value="Logout" action="#{loginBean.logout}" styleClass="logout-button" />
+            <cc:toolbar/>
         </h:form>
     </div>
 </h:body>
