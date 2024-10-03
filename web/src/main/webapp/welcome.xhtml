@@ -1,20 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:comp="http://example.com/jsf/components">
 <h:head>
     <title>Welcome Page</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
         .container {
             background-color: #ffffff;
             padding: 20px;
@@ -29,9 +20,11 @@
             margin-top: 20px;
         }
     </style>
+    <h:outputStylesheet name="css/styles.css"/>
 </h:head>
 <h:body>
     <f:event type="preRenderView" listener="#{loginBean.checkLogin}"/>
+    <comp:toolbar />
     <div class="container">
         <h1>Welcome, #{loginBean.username}!</h1>
         <h:form>
